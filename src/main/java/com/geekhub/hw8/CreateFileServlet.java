@@ -23,7 +23,13 @@ public class CreateFileServlet extends HttpServlet {
 
         if (!Files.exists(path)) {
             Files.createFile(path);
+
+        }else try {
+            throw new Exception("File with this name exist");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        req.getRequestDispatcher(folder + "/").forward(req, resp);
+        req.getRequestDispatcher("/dir/view?path=" + folder + "/").forward(req, resp);
+
     }
 }

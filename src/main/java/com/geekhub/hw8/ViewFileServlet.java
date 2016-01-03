@@ -10,18 +10,17 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @WebServlet("/file/view")
 public class ViewFileServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Path path = (Path) req.getAttribute("path");
+        Path path = Paths.get(req.getParameter("path"));
+        resp.setHeader("Content-Disposition", "attachment;filename=\"" + path.getFileName().toString() + "\"");
 
-        resp.setContentType("application");
-        resp.setHeader("Content-Disposition","attachment;filename=\"" + path.getFileName().toString() + "\"");
-
-        byte[] file =Files.readAllBytes(path);
+        byte[] file = Files.readAllBytes(path);
         resp.setContentLength(file.length);
 
         resp.getOutputStream().write(file);

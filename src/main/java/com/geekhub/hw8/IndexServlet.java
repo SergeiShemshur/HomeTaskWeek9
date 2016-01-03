@@ -15,14 +15,6 @@ public class IndexServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Path path = Paths.get(req.getRequestURI());
-
-        if (!path.toString().equals("/")) {
-            req.setAttribute("path", path);
-        }
-
-        if (Files.isDirectory(path)) {
-            req.getRequestDispatcher("/dir/view").forward(req, resp);
-        } else req.getRequestDispatcher("/file/view").forward(req, resp);
+        resp.sendRedirect("/dir/view");
     }
 }

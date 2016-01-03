@@ -5,8 +5,8 @@
 .idea
 *.iml
 target
-test
 pom.xml
+
 
 out
 gen

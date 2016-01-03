@@ -1,5 +1,6 @@
 package com.geekhub.hw8;
 
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,11 +20,13 @@ public class RemoveFileServlet extends HttpServlet {
         String removeFile = req.getParameter("remove");
         Path path = Paths.get(removeFile);
         String folder = path.getParent().toString();
-        if(Files.exists(path)){
-            Files.delete(path);
-        }
-        req.getRequestDispatcher(folder+"/").forward(req, resp);
 
+        if (!Files.deleteIfExists(path)) try {
+            throw new Exception("File is not exist");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        req.getRequestDispatcher("/dir/view?path=" + folder + "/").forward(req, resp);
 
     }
 }
